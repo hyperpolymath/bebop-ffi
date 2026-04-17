@@ -14,8 +14,8 @@
       "calibrated": "true"
     }
   },
-  "wire_bytes_hex": "00000000000000000000000000000000",
-  "wire_bytes_comment": "TODO: Generate actual Bebop wire bytes using bebopc",
+  "wire_bytes_hex": "790000000100060ff693010000020e00000074656d702d73656e736f722d3031030100040000000000803740050700000063656c73697573060f000000666163746f72792d666c6f6f722d610702000000080000006669726d7761726505000000312e322e330a00000063616c69627261746564040000007472756500",
+  "wire_bytes_comment": "Generated from Zig FFI encoder with Bebop wire format",
   "expected_decode": {
     "timestamp": 1735000000000,
     "sensor_id": "temp-sensor-01",
