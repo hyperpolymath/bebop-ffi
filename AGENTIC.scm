@@ -1,51 +1,52 @@
-;; SPDX-License-Identifier: AGPL-3.0-or-later
-;; SPDX-FileCopyrightText: 2025 Hyperpolymath Contributors
+;; SPDX-License-Identifier: PMPL-1.0-or-later
+;; Copyright (C) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 ;;
 ;; AGENTIC.scm - AI/Agent interaction policies for this repository
 
 (agentic
- (version 1)
- (project "bebop-v-ffi")
+ (version 2)
+ (project "bebop-ffi")
+ (note "Repo renamed bebop-v-ffi → bebop-ffi on 2026-04-17. Zig is canonical.")
 
  (agent-role
-  (primary "design-assistant")
-  (description "AI assists with design, docs, and examples but does not author ABI changes"))
+  (primary "zig-implementer")
+  (description "AI implements, tests, and documents the Zig binding. ABI header changes require human review."))
 
  (boundaries
   (can-do
+   "Implement and update Zig code in implementations/zig/"
+   "Write and maintain tests"
+   "Update internal docs (STATE.scm, META.scm, ECOSYSTEM.scm, CLAUDE.md)"
    "Propose API shapes and struct layouts"
-   "Draft documentation and examples"
-   "Explain existing code and design rationale"
-   "Suggest test cases and edge conditions"
-   "Review code for common FFI pitfalls"
-   "Generate V usage examples")
+   "Draft documentation"
+   "Fix build system issues (build.zig)"
+   "Update consumer build.zig paths (e.g. volumod)"))
 
   (cannot-do
    "Modify include/bebop_v_ffi.h without human review"
-   "Change serialization logic"
-   "Alter build system (build.zig, Cargo.toml)"
+   "Rename ABI symbols"
+   "Change Bebop wire format interpretation without spec reference"
    "Push commits directly"
-   "Refactor across language boundaries"
-   "Migrate between implementations"))
+   "Migrate the Zig implementation to another language"))
 
  (review-gates
-  ((artifact "ABI header changes")
+  ((artifact "ABI header changes (bebop_v_ffi.h)")
    (requires human-sign-off)
-   (reason "ABI stability is core deliverable"))
+   (reason "ABI stability is the core deliverable"))
   ((artifact "Serialization logic")
    (requires human-sign-off)
-   (reason "Wire format correctness critical"))
-  ((artifact "Build scripts")
+   (reason "Wire format correctness critical; mismatches are silent corruption"))
+  ((artifact "Schema changes (schemas/*.bop)")
    (requires human-sign-off)
-   (reason "Toolchain changes affect all consumers")))
+   (reason "Schema is the source of truth for field indices and types")))
 
  (interaction-style
   (verbosity concise)
-  (code-generation cautious)
+  (code-generation full-implementation-no-stubs)
   (proactive-suggestions allowed)
   (explain-before-act required))
 
  (trust-escalation
-  (default-level "propose-only")
+  (default-level "implement-with-approval")
   (escalation-path
-   "propose-only -> draft-with-review -> implement-with-approval")))
+   "propose → implement → human-sign-off for ABI changes")))

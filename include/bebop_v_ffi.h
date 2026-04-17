@@ -1,10 +1,15 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-// SPDX-FileCopyrightText: 2025 Hyperpolymath Contributors
+// SPDX-License-Identifier: PMPL-1.0-or-later
+// Copyright (C) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
+// (MPL-2.0 is the automatic legal fallback until PMPL is formally recognised)
 //
-// bebop_v_ffi.h - Stable C ABI contract for Bebop-V bindings
+// bebop_v_ffi.h - Stable C ABI contract for Bebop serialization bindings.
+//
+// NOTE: The `_v_` in the name is retained for C ABI stability — the V-lang
+// binding was moved to v-ecosystem/v-api-interfaces/v-bebop/ on 2026-04-17.
+// Zig is now the canonical implementation (implementations/zig/).
 //
 // This header defines the FFI boundary. Implementations (Zig, Rust, etc.)
-// must conform to these signatures. V bindings call these functions.
+// must conform to these signatures exactly.
 
 #ifndef BEBOP_V_FFI_H
 #define BEBOP_V_FFI_H

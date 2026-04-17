@@ -1,4 +1,5 @@
-# SPDX-License-Identifier: AGPL-3.0-or-later
+# SPDX-License-Identifier: PMPL-1.0-or-later
+# Copyright (C) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 # RSR-compliant .gitignore
 
 # OS & Editor
@@ -16,6 +17,10 @@ Thumbs.db
 /build/
 /dist/
 /out/
+
+# Zig build artefacts
+implementations/zig/zig-out/
+implementations/zig/.zig-cache/
 
 # Dependencies
 /node_modules/
@@ -77,3 +82,11 @@ htmlcov/
 /tmp/
 *.tmp
 *.bak
+target/
+node_modules/
+_build/
+deps/
+.elixir_ls/
+.cache/
+build/
+dist/
