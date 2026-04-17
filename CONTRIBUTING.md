@@ -17,8 +17,8 @@ See `META.scm` for governance principles.
 ## Getting Started
 
 # Clone the repository
-git clone https://github.com/hyperpolymath/bebop-v-ffi.git
-cd bebop-v-ffi
+git clone https://github.com/hyperpolymath/bebop-ffi.git
+cd bebop-ffi
 
 # Using Nix (recommended for reproducibility)
 nix develop
@@ -35,8 +35,8 @@ just test    # Run test suite
 
 ### Repository Structure
 ```
-bebop-v-ffi/
-├── src/                 # Source code (Perimeter 1-2)
+bebop-ffi/
+├── implementations/     # Implementation code (Zig, Rust) (Perimeter 1-2)
 ├── lib/                 # Library code (Perimeter 1-2)
 ├── extensions/          # Extensions (Perimeter 2)
 ├── plugins/             # Plugins (Perimeter 2)

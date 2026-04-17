@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2025 Hyperpolymath Contributors
-= Bebop-V-FFI
+= Bebop FFI
 :toc: left
 :toclevels: 3
 :icons: font
@@ -8,7 +8,7 @@
 :version: 0.1.0
 :status: Active Development
 
-> High-performance FFI bindings between Bebop binary serialization and the V programming language for Industrial IoT edge computing
+> High-performance stable C ABI for Bebop binary serialization, with Zig as the canonical implementation
 
 image:https://img.shields.io/badge/RSR-Bronze-CD7F32[RSR Bronze]
 image:https://img.shields.io/badge/TPCF-Perimeter%203-blue[TPCF Perimeter 3]
@@ -18,21 +18,20 @@ image:https://img.shields.io/badge/Kaldor-Integration-purple[Kaldor Integration]
 
 == Overview
 
-`bebop-v-ffi` provides a small, explicit FFI boundary that exposes the
-https://bebop.sh[Bebop] binary serialization format to the https://vlang.io[V]
-programming language.
+Bebop FFI provides a small, explicit FFI boundary that exposes the
+https://bebop.sh[Bebop] binary serialization format via a *stable C ABI*.
 
-The project defines a *stable C ABI* (the "FFI contract") and allows multiple
-implementations behind it (initially Zig; Rust welcome), so that V applications
-can decode and encode Bebop messages without reimplementing the wire format.
+The project defines the FFI contract (`include/bebop_v_ffi.h`) and allows multiple
+implementations behind it (Zig is canonical; Rust welcome), so that applications
+in any language can decode and encode Bebop messages without reimplementing the wire format.
 
 This library is a core component of the https://github.com/hyperpolymath/kaldor-iiot[Kaldor IIoT] ecosystem, enabling efficient message passing between resource-constrained edge devices (ESP32-C6, RISC-V microcontrollers) and backend services.
 
 === Why "FFI" (not "bridge")?
 
-This project is deliberately named `bebop-v-ffi` because the hard part here is not
-"connecting two projects" — it's defining and maintaining a correct Foreign Function
-Interface.
+This project focuses on defining and maintaining a correct Foreign Function
+Interface — the hard part is not connecting languages, but correctness of the
+ABI boundary.
 
 An FFI boundary is where you must be explicit about things that higher-level code
 usually hides:
@@ -56,15 +55,11 @@ without changing user code.
 
 |ABI header
 |**drafted**
-|`include/bebop_v_ffi.h`
-
-|V bindings
-|**drafted**
-|`v/bebop_bridge.v`
+|`include/bebop_v_ffi.h` (stable, historical name for C ABI compatibility)
 
 |Zig implementation
-|**placeholder skeleton**
-|`implementations/zig`
+|**in development**
+|`implementations/zig/`
 
 |Rust implementation
 |**help wanted**
@@ -77,9 +72,10 @@ without changing user code.
 
 === Quickstart (conceptual)
 
-1. Generate C bindings from schema with `bebopc --lang c` (see `scripts/gen_c_from_schema.sh`)
-2. Build an implementation (Zig today)
-3. Use the `bebop_bridge.v` module in `v/` directory from your V app
+1. Generate C bindings from schema with `bebopc --lang c`
+2. Build the Zig implementation via `zig build`
+3. Link your application against the compiled FFI library
+4. Call C functions from `include/bebop_v_ffi.h`
 
 === Why Bebop?
 
@@ -105,34 +101,34 @@ Benchmark: 1M messages (100-byte payload)
 └────────────────┴───────────┴─────────────┘
 ----
 
-=== Why V?
+=== Why Zig for the canonical implementation?
 
-https://vlang.io[V] is a systems programming language designed for reliability and performance:
+Zig offers:
 
-* **Compiles to native code** - C backend, ~1MB binaries
+* **C ABI compatible** - direct FFI with C, no wrapper overhead
+* **Memory safe** - bounds checking, no buffer overflows
 * **No hidden allocations** - predictable memory usage
-* **No garbage collector pauses** - manual memory management option
-* **C interop** - seamless FFI with existing C libraries
-* **Fast compilation** - ~1 second for most projects
-* **Ideal for embedded** - targets ESP32, ARM, RISC-V
+* **Fast compilation** - builds in milliseconds
+* **Cross-compilation first** - seamless targeting ESP32, ARM, RISC-V
+* **Ideal for embedded** - minimal runtime, bare-metal friendly
 
-V fills the gap between Rust's complexity and C's lack of safety, making it perfect for IIoT firmware development.
+Zig enables us to maintain a correct, auditable FFI layer that consumers in any language can trust.
 
 === Why This FFI?
 
 Kaldor IIoT needs to move telemetry data (temperature, humidity, loom status, spinning metrics) between:
 
-* **Edge devices** (ESP32-C6 running V firmware)
+* **Edge devices** (ESP32-C6 and other microcontrollers)
 * **Gateway nodes** (Raspberry Pi, RISC-V SBCs)
-* **Backend services** (Deno/TypeScript, Rust WASM)
+* **Backend services** (Deno, Rust, ReScript)
 
-Bebop-V-FFI provides the glue layer, enabling:
+Bebop FFI provides the glue layer via stable C ABI, enabling:
 
 [source]
 ----
 ┌─────────────────┐     Bebop Binary      ┌─────────────────┐
-│  V Firmware     │◄────────────────────►│  Deno Backend   │
-│  (ESP32-C6)     │    ~8 bytes/msg       │  (TypeScript)   │
+│  Firmware       │◄────────────────────►│  Deno/Rust      │
+│  (ESP32-C6)     │    ~8 bytes/msg       │  Backend        │
 └────────┬────────┘                       └────────┬────────┘
          │                                         │
          │  Matter Protocol (Thread mesh)          │  WASM Compute
@@ -199,41 +195,30 @@ message LoomStatus {
 }
 ----
 
-=== Generate V Code
+=== Build the FFI Library
 
 [source,bash]
 ----
-# Generate V bindings from Bebop schema
-bebop --generator v --input schemas/telemetry.bop --output src/telemetry.v
+# Build Zig implementation
+cd implementations/zig
+zig build -Drelease-safe
+
+# Output: shared library (libbepopc.so / .dylib / .dll)
 ----
 
-=== Use in V
+=== Link and Call from Your Application
 
-[source,v]
+Generate struct definitions and FFI bindings from your schema,
+then call the C functions in `include/bebop_v_ffi.h`:
+
+[source]
 ----
-import bebop_ffi
-import telemetry
-
-fn main() {
-    // Create a sensor reading
-    reading := telemetry.SensorReading{
-        device_id: 0x1001
-        timestamp_ms: u64(time.now().unix_milli())
-        temperature_c: 23.5
-        humidity_pct: 65.2
-        status_flags: 0x01
-    }
-
-    // Serialize to Bebop binary (zero-copy)
-    buffer := bebop_ffi.encode(reading)
-    println('Serialized: ${buffer.len} bytes')
-
-    // Send over network/Matter protocol...
-
-    // Deserialize (zero-copy)
-    decoded := bebop_ffi.decode[telemetry.SensorReading](buffer)
-    println('Temperature: ${decoded.temperature_c}°C')
-}
+// Pseudocode: C-compatible FFI calls
+VBebopCtx *ctx = bebop_ctx_new();
+VBytes encoded = bebop_encode_sensor_reading(ctx, &reading);
+// ... send encoded buffer ...
+VBytes_free(ctx, encoded);
+bebop_ctx_free(ctx);
 ----
 
 == Architecture
@@ -242,23 +227,22 @@ fn main() {
 ----
 ┌─────────────────────────────────────────────────────────┐
 │                     User Application                     │
-│                    (V source code)                       │
+│              (any language with C FFI)                  │
 └─────────────────────────┬───────────────────────────────┘
                           │
                           ▼
 ┌─────────────────────────────────────────────────────────┐
-│                Generated V Bindings                      │
-│        (from .bop schemas via bebop compiler)           │
+│                   C ABI Contract                         │
+│         (include/bebop_v_ffi.h - stable & explicit)    │
 ├─────────────────────────────────────────────────────────┤
-│  struct SensorReading { ... }                           │
-│  fn encode(msg) -> []u8                                 │
-│  fn decode[T](buf) -> T                                 │
+│  bebop_ctx_new/free, bebop_encode_*, bebop_decode_*   │
+│  Memory ownership rules clearly defined                 │
 └─────────────────────────┬───────────────────────────────┘
                           │
                           ▼
 ┌─────────────────────────────────────────────────────────┐
-│                   Bebop-V-FFI Core                       │
-│              (this library - V + C)                     │
+│                 Zig Implementation                       │
+│              (implementations/zig/ - canonical)        │
 ├─────────────────────────────────────────────────────────┤
 │  - Buffer management (arena allocator)                  │
 │  - Endianness handling                                  │
@@ -268,60 +252,66 @@ fn main() {
                           │
                           ▼
 ┌─────────────────────────────────────────────────────────┐
-│                    Bebop Runtime                         │
-│              (C library, ~50KB compiled)                │
+│                 Bebop Wire Format                        │
+│         (standardized binary serialization)             │
 └─────────────────────────────────────────────────────────┘
 ----
 
 === Design Rationale
 
-**Why V instead of Rust for firmware?**
+**Why a stable C ABI?**
 
-While Rust is superior for complex systems, V offers:
+The FFI contract enables multiple things:
 
-1. **Faster iteration** - 1s compile times vs 30s+ for Rust
-2. **Simpler mental model** - No borrow checker complexity on microcontrollers
-3. **Smaller binaries** - Critical for ESP32's 4MB flash
-4. **C-like FFI** - Direct integration with ESP-IDF SDK
+1. **Language agnostic** - Any language with C FFI can use it (V, Rust, Zig, Ada, ReScript, etc.)
+2. **Implementation flexibility** - We can improve under the ABI without breaking consumers
+3. **Binary compatibility** - Applications stay linked even after library updates
 
-**Why FFI instead of pure V?**
+**Why Zig implementation?**
 
-Bebop's core runtime is C-based, battle-tested, and optimized. Wrapping it via FFI gives us:
+Zig is ideal because:
 
-1. **Proven serialization** - No bugs in the hot path
-2. **Future-proofing** - Bebop updates flow through automatically
-3. **Multi-language parity** - Same wire format across V, Rust, TypeScript
+1. **Zero-overhead FFI** - Compiles directly to correct C ABI
+2. **Memory safety** - Catches mistakes at compile time
+3. **Cross-compilation** - Targets embedded platforms seamlessly
+4. **Small footprint** - Minimal runtime for microcontroller constraints
+
+**Why not reimplement Bebop?**
+
+Bebop's wire format is standardized and battle-tested. We wrap it rather than reinvent to:
+
+1. **Guarantee correctness** - Use the canonical implementation
+2. **Track upstream** - Bebop updates flow through automatically
+3. **Multi-language parity** - Same wire format across all consumer languages
 
 == Integration with Kaldor IIoT
 
-Bebop-V-FFI is designed to work seamlessly with the Kaldor IIoT platform:
+Bebop FFI is designed to work seamlessly with the Kaldor IIoT platform.
+Any language with C FFI support can use it. Example pseudocode for a firmware app:
 
-[source,v]
+[source]
 ----
-// firmware/main.v - ESP32-C6 Matter device
-import matter
-import bebop_ffi
-import kaldor.telemetry
+// Pseudocode: language-independent example
+// Create an FFI context
+ctx := bebop_ctx_new()
 
-fn on_sensor_tick() {
-    reading := collect_sensor_data()
-
-    // Serialize with Bebop
-    payload := bebop_ffi.encode(reading)
-
-    // Send via Matter protocol (Thread mesh)
-    matter.publish("kaldor/telemetry", payload)
+// Build a message (generated structs from schema)
+reading := SensorReading{
+    device_id: 0x1001,
+    timestamp_ms: get_time_ms(),
+    temperature_c: read_temperature(),
+    humidity_pct: read_humidity(),
+    status_flags: 0x01
 }
 
-fn collect_sensor_data() telemetry.SensorReading {
-    return telemetry.SensorReading{
-        device_id: matter.get_device_id()
-        timestamp_ms: u64(time.now().unix_milli())
-        temperature_c: read_temperature_sensor()
-        humidity_pct: read_humidity_sensor()
-        status_flags: get_device_status()
-    }
-}
+// Serialize via FFI
+buffer := bebop_encode_sensor_reading(ctx, reading)
+
+// Send payload via Matter/network...
+publish("kaldor/telemetry", buffer)
+
+// Clean up
+bebop_ctx_free(ctx)
 ----
 
 === Kaldor Message Types
@@ -464,12 +454,12 @@ See link:ROADMAP.adoc[ROADMAP.adoc] for the full development roadmap including:
 
 == Help Wanted: Rust Implementation (plug-compatible)
 
-I'd love a contributor to implement the same ABI in Rust (`staticlib`/`cdylib`), so V
-users can choose Zig or Rust underneath.
+We'd welcome a Rust implementation behind the same C ABI,
+so consumers can choose Zig or Rust underneath.
 
 *What you'd do:*
 
-* Implement the functions in `include/bebop_v_ffi.h`
+* Implement the functions in `include/bebop_v_ffi.h` as a Rust `cdylib`
 * Use `VBytes` (`ptr+len`) for all strings/bytes (*do not* assume NUL-terminated data)
 * Match the framing + golden test vectors under `test-vectors/`
 
@@ -478,7 +468,7 @@ users can choose Zig or Rust underneath.
 * `bebop_decode_sensor_reading()` for `SensorReading`
 * `bebop_ctx_new()` / `bebop_ctx_free()` and `bebop_free_reading()`
 
-See `docs/60-contributing-implementations.adoc` for notes and pitfalls.
+See `docs/60-contributing-implementations.adoc` for technical notes and common pitfalls.
 
 == Community
 

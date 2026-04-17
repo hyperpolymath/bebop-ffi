@@ -2,13 +2,15 @@
 // SPDX-FileCopyrightText: 2025 Hyperpolymath Contributors
 = Overview
 
-`bebop-v-ffi` exposes Bebop serialization to V via a stable C ABI.
+Bebop FFI exposes Bebop binary serialization via a stable C ABI.
 
-The key idea is to *avoid re-implementing the wire format in V*. Instead,
-V calls into a small native library (Zig or Rust) that uses the canonical
-Bebop tooling/library for correctness.
+The key idea is to *avoid re-implementing the wire format in every language*.
+Instead, any application calls into a small native library (Zig as canonical;
+Rust welcome) that uses the canonical Bebop tooling for correctness.
+
+One C ABI, multiple implementations, language-agnostic consumers.
 
 == See Also
 
 * link:30-ffi-contract.adoc[FFI Contract] — the ABI definition and rules
-* link:20-wire-and-framing.adoc[Wire and Framing] — message framing over TCP
+* link:20-wire-and-framing.adoc[Wire and Framing] — message framing conventions

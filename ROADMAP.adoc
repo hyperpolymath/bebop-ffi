@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2025 Hyperpolymath Contributors
-= Bebop-V-FFI Roadmap
+= Bebop FFI Roadmap
 :toc: left
 :toclevels: 3
 :icons: font
 :source-highlighter: rouge
 
-> Development roadmap from initial implementation through next-generation hybrid architecture
+> Development roadmap from initial implementation through next-generation multi-language support
 
 == Quick Summary
 
@@ -54,18 +54,18 @@ Each waypoint builds on the previous, with clear milestones and success criteria
 
 *Goal*: Stable v1.0.0 release with complete FFI bindings, comprehensive tests, and production-ready documentation.
 
-=== Phase 1.1: Core Implementation
+=== Phase 1.1: Core Zig Implementation
 
 [cols="1,3,1"]
 |===
 |Status |Task |Priority
 
 |[ ]
-|Implement Bebop runtime C wrapper
+|Implement Bebop wire format parsing in Zig
 |P0
 
 |[ ]
-|Create V FFI bindings to C layer
+|Define C ABI contract (bebop_v_ffi.h)
 |P0
 
 |[ ]
@@ -85,39 +85,39 @@ Each waypoint builds on the previous, with clear milestones and success criteria
 |P0
 |===
 
-=== Phase 1.2: Code Generation
+=== Phase 1.2: Build System & Testing
 
 [cols="1,3,1"]
 |===
 |Status |Task |Priority
 
 |[ ]
-|Create `bebopc` V generator plugin
+|Zig build configuration (cross-platform)
 |P0
 
 |[ ]
-|Generate struct definitions from `.bop` schemas
+|Unit tests for encode/decode
 |P0
 
 |[ ]
-|Generate encode/decode functions per type
+|Golden test vectors (wire format validation)
 |P0
 
 |[ ]
-|Support all Bebop primitive types
+|Bounds checking validation
 |P0
 
 |[ ]
-|Support arrays, maps, unions
+|Memory leak detection (Valgrind)
 |P1
 
 |[ ]
-|Support message evolution (optional fields)
-|P1
-
-|[ ]
-|Add `--embed` flag for single-file output
+|Performance benchmarks
 |P2
+
+|[ ]
+|CI/CD pipeline (Linux/macOS/Windows)
+|P1
 |===
 
 === Phase 1.3: Kaldor Integration
@@ -198,48 +198,44 @@ Each waypoint builds on the previous, with clear milestones and success criteria
 
 == Waypoint 2: Package
 
-*Goal*: Distribute Bebop-V-FFI through standard package managers and integrate with the broader V and IIoT ecosystems.
+*Goal*: Distribute Bebop FFI through standard package managers and ecosystem integration.
 
-=== Phase 2.1: V Package Manager (vpkg/vpm)
+=== Phase 2.1: Package Manager Integration
 
 [cols="1,3,1"]
 |===
 |Status |Task |Priority
 
 |[ ]
-|Create `v.mod` manifest file
+|Guix package definition (primary)
 |P0
 
 |[ ]
-|Register with VPM registry
+|Nix flake (secondary)
 |P1
 
 |[ ]
-|Add install instructions to README
+|crates.io publish (if Rust variant)
+|P1
+
+|[ ]
+|Add installation docs
 |P0
-
-|[ ]
-|Test installation from fresh system
-|P1
 
 |[ ]
 |Document version compatibility matrix
 |P1
 |===
 
-=== Phase 2.2: System Packages
+=== Phase 2.2: Distribution & Docs
 
 [cols="1,3,1"]
 |===
 |Status |Task |Priority
 
 |[ ]
-|Create Guix package definition
-|P1
-
-|[ ]
-|Create Nix flake
-|P2
+|Publish release notes & changelog
+|P0
 
 |[ ]
 |Create AUR PKGBUILD (Arch Linux)
@@ -250,8 +246,12 @@ Each waypoint builds on the previous, with clear milestones and success criteria
 |P2
 
 |[ ]
-|Create Debian/Ubuntu .deb package
-|P3
+|Document library dependencies & requirements
+|P1
+
+|[ ]
+|Create reproducible build guide
+|P1
 |===
 
 === Phase 2.3: Ecosystem Integration
@@ -265,11 +265,7 @@ Each waypoint builds on the previous, with clear milestones and success criteria
 |P1
 
 |[ ]
-|Create GitHub Action for schema validation
-|P2
-
-|[ ]
-|Add to awesome-v and awesome-iiot lists
+|Add to awesome-c-apis and awesome-iiot lists
 |P2
 
 |[ ]
@@ -277,162 +273,155 @@ Each waypoint builds on the previous, with clear milestones and success criteria
 |P1
 
 |[ ]
-|Create demo video
-|P2
+|Create integration guide for consumers
+|P1
+
+|[ ]
+|Community feedback loop (issues, discussions)
+|P3
 |===
 
-=== Phase 2.4: CI/CD & Releases
+=== Phase 2.4: Documentation
 
 [cols="1,3,1"]
 |===
 |Status |Task |Priority
 
 |[ ]
-|Automated releases via GitLab CI / GitHub Actions
+|API reference documentation
+|P0
+
+|[ ]
+|Integration guide for new languages
 |P1
 
 |[ ]
-|Semantic versioning automation
+|Security audit documentation
 |P1
 
 |[ ]
-|CHANGELOG generation
-|P1
-
-|[ ]
-|Binary artifacts for major platforms
+|Performance benchmarks & tuning guide
 |P2
 
 |[ ]
-|Reproducible builds (Guix/Nix)
-|P1
+|Troubleshooting guide
+|P2
 |===
 
 === Package Criteria
 
-* [ ] Available via `vpkg install bebop-v-ffi`
 * [ ] Guix package in official channel
-* [ ] Nix flake in nixpkgs (or overlay)
-* [ ] AUR package available
-* [ ] Automated release pipeline
+* [ ] Nix flake available
+* [ ] AUR package available (if Linux)
+* [ ] Automated release pipeline via GitHub
 * [ ] Semantic versioning enforced
+* [ ] RSR Silver tier compliance
 
 === Target: v1.1.0 - v1.x
 
 ---
 
-== Waypoint 3: Next-Gen Development (Rust-V-Bebop)
+== Waypoint 3: Next-Gen Development (Multi-Language Support)
 
-*Goal*: Hybrid architecture combining Rust's safety guarantees with V's simplicity, enabling advanced IIoT patterns.
+*Goal*: Rust alternative implementation and expanded language bindings.
 
 === Vision
 
-The next generation of Bebop-V-FFI will introduce a *Rust core* with V bindings, similar to the https://github.com/hyperpolymath/bunsenite[bunsenite] architecture:
+The next generation of Bebop FFI will expand from Zig-primary to multi-implementation support:
 
 [source]
 ----
 ┌─────────────────────────────────────────────────────────┐
-│                     V Application                        │
-│              (ESP32-C6 / RISC-V firmware)               │
+│             User Application (Any Language)             │
+│          Rust / Ada / ReScript / Deno / etc.           │
 └─────────────────────────┬───────────────────────────────┘
                           │
                           ▼
 ┌─────────────────────────────────────────────────────────┐
-│                    Zig FFI Layer                         │
-│              (Stable C ABI, ~15KB)                       │
+│                   C ABI Contract                         │
+│              (Stable, Language-Agnostic)                │
 └─────────────────────────┬───────────────────────────────┘
                           │
+                ┌─────────┴──────────┐
+                ▼                    ▼
+      ┌──────────────────┐  ┌──────────────────┐
+      │  Zig (Canonical) │  │ Rust (Optional)  │
+      │ Implementation   │  │ Implementation   │
+      └──────────────────┘  └──────────────────┘
+                │                    │
+                └─────────┬──────────┘
                           ▼
-┌─────────────────────────────────────────────────────────┐
-│                    Rust Core Library                     │
-│         (bebop-rs + custom Kaldor extensions)           │
-├─────────────────────────────────────────────────────────┤
-│  - Zero-copy parsing (verified safe)                    │
-│  - Compile-time schema validation                       │
-│  - Async encoding for large messages                    │
-│  - WASM target for browser/Deno                         │
-└─────────────────────────┬───────────────────────────────┘
-                          │
-                          ▼
-┌─────────────────────────────────────────────────────────┐
-│                   Bebop Wire Format                      │
-└─────────────────────────────────────────────────────────┘
+          ┌───────────────────────────────┐
+          │   Bebop Wire Format (std)     │
+          └───────────────────────────────┘
 ----
 
-=== Phase 3.1: Rust Core
+=== Phase 3.1: Rust Implementation
 
 [cols="1,3,1"]
 |===
 |Status |Task |Priority
 
 |[ ]
-|Fork/integrate bebop-rs crate
+|Implement C ABI in Rust (`cdylib`)
 |P0
 
 |[ ]
-|Add Kaldor-specific extensions
+|Match Zig implementation feature-for-feature
+|P0
+
+|[ ]
+|Add Kaldor-specific optimizations
 |P1
-
-|[ ]
-|Implement zero-copy views (lifetimes)
-|P0
 
 |[ ]
 |Add `#![deny(unsafe_code)]` audit
 |P0
 
 |[ ]
-|WASM target for browser/Deno
-|P1
+|WASM target for browser/Deno (optional)
+|P2
 
 |[ ]
 |`no_std` support for bare-metal
 |P1
 |===
 
-=== Phase 3.2: Zig FFI Layer
+=== Phase 3.2: Language Bindings
 
 [cols="1,3,1"]
 |===
 |Status |Task |Priority
 
 |[ ]
-|Design stable C ABI interface
-|P0
-
-|[ ]
-|Implement Zig wrapper functions
-|P0
-
-|[ ]
-|Add error code translation
+|Deno/TypeScript bindings
 |P1
 
 |[ ]
-|Memory ownership semantics (who frees?)
-|P0
+|ReScript bindings (Kaldor frontend)
+|P2
 
 |[ ]
-|Thread safety guarantees
+|Ada bindings (with SPARK integration)
+|P2
+
+|[ ]
+|Generate bindings from C header
 |P1
+
+|[ ]
+|Document FFI patterns for new languages
+|P2
 |===
 
-=== Phase 3.3: V Bindings (v2)
+=== Phase 3.3: Performance & Optimization
 
 [cols="1,3,1"]
 |===
 |Status |Task |Priority
 
 |[ ]
-|Update V bindings to use Zig FFI
-|P0
-
-|[ ]
-|Maintain API compatibility with v1
-|P1
-
-|[ ]
-|Add async encode/decode support
+|SIMD optimization for bulk encode/decode
 |P2
 
 |[ ]
@@ -442,29 +431,10 @@ The next generation of Bebop-V-FFI will introduce a *Rust core* with V bindings,
 |[ ]
 |Compile-time schema embedding
 |P2
-|===
-
-=== Phase 3.4: Multi-Language Parity
-
-[cols="1,3,1"]
-|===
-|Status |Task |Priority
 
 |[ ]
-|Deno/TypeScript bindings via WASM
-|P1
-
-|[ ]
-|ReScript bindings (Kaldor frontend)
+|Runtime polymorphism for message dispatch
 |P2
-
-|[ ]
-|Python bindings (PyO3)
-|P3
-
-|[ ]
-|Go bindings (CGo)
-|P3
 |===
 
 === Phase 3.5: Advanced Features
@@ -496,13 +466,13 @@ The next generation of Bebop-V-FFI will introduce a *Rust core* with V bindings,
 
 === Next-Gen Criteria
 
-* [ ] Rust core with zero `unsafe` blocks
-* [ ] Zig FFI with stable C ABI
-* [ ] V bindings API-compatible with v1
-* [ ] WASM support for browser/Deno
+* [ ] Rust implementation matches Zig feature-for-feature
+* [ ] Stable C ABI unchanged across implementations
+* [ ] Language bindings for Deno/TypeScript, ReScript, Ada
+* [ ] WASM support for browser/Deno (if Rust)
 * [ ] `no_std` support for bare-metal
 * [ ] RSR Silver tier compliance
-* [ ] Formal verification (stretch goal)
+* [ ] Formal verification of ABI (stretch goal)
 
 === Target: v2.0.0
 
