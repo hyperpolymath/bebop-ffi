@@ -1,0 +1,27 @@
+-- SPDX-License-Identifier: PMPL-1.0-or-later
+-- Copyright (c) 2026 Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+-- (MPL-2.0 is the automatic legal fallback until PMPL is formally recognised)
+--
+-- bebop-ffi.ipkg — Idris2 package declaration for the Bebop FFI ABI layer.
+--
+-- This package covers the Idris2 ABI layer only (src/abi/).  The Zig
+-- implementation is built separately via `just build` / `cd implementations/zig && zig build`.
+--
+-- Usage:
+--   idris2 --build bebop-ffi.ipkg          # build the package
+--   idris2 --check src/abi/Foreign.idr     # typecheck Foreign module
+
+package bebop-ffi
+
+version    = 0.1.0
+authors    = "Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>"
+brief      = "Idris2 ABI layer for the Bebop binary serialisation FFI"
+readme     = "README.adoc"
+license    = "PMPL-1.0-or-later"
+
+sourcedir  = "src"
+
+modules
+  = BebopFfi.Types
+  , BebopFfi.Layout
+  , BebopFfi.Foreign

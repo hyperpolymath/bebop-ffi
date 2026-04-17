@@ -55,6 +55,11 @@ build *args:
     @echo "Building {{project}}..."
     cd implementations/zig && zig build {{args}}
 
+# Typecheck the Idris2 ABI layer (src/BebopFfi/)
+abi-check:
+    @echo "Typechecking Idris2 ABI layer..."
+    idris2 --typecheck bebop-ffi.ipkg
+
 # Build in release mode with optimizations
 build-release *args:
     @echo "Building {{project}} (release)..."
