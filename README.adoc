@@ -343,7 +343,7 @@ Bebop-V-FFI meets *Rhodium Standard Repository (RSR) Bronze tier* requirements:
 * Offline-first (no network dependencies)
 * Complete documentation
 * `.well-known/` directory
-* Build system (justfile)
+* Build system (Justfile)
 * CI/CD pipeline
 
 === TPCF: Perimeter 3 (Community Sandbox)

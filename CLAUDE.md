@@ -71,4 +71,4 @@ All source files must include:
 
 - **Tier**: Bronze
 - **Prohibited**: Python, TypeScript/JavaScript (use ReScript), V-lang, Go
-- **Required**: justfile, .well-known/, comprehensive docs
+- **Required**: Justfile, .well-known/, comprehensive docs
