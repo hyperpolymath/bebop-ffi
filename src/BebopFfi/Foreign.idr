@@ -1,4 +1,4 @@
--- SPDX-License-Identifier: PMPL-1.0-or-later
+-- SPDX-License-Identifier: MPL-2.0
 -- Copyright (c) 2026 Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
 -- (MPL-2.0 is the automatic legal fallback until PMPL is formally recognised)
 --
@@ -10,7 +10,7 @@
 -- `implementations/zig/zig-out/lib/libbebop_v_ffi.so`).
 --
 -- NOTE on the `_v_` prefix: all exported symbols retain the historical
--- `bebop_v_` prefix for C ABI stability — the V-lang binding was removed in
+-- `bebop_v_` prefix for C ABI stability — the zig binding was removed in
 -- 2026-04-17 but the symbol names are frozen.
 --
 -- Memory management contract:

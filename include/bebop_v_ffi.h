@@ -1,10 +1,10 @@
-// SPDX-License-Identifier: PMPL-1.0-or-later
+// SPDX-License-Identifier: MPL-2.0
 // Copyright (C) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 // (MPL-2.0 is the automatic legal fallback until PMPL is formally recognised)
 //
 // bebop_v_ffi.h - Stable C ABI contract for Bebop serialization bindings.
 //
-// NOTE: The `_v_` in the name is retained for C ABI stability — the V-lang
+// NOTE: The `_v_` in the name is retained for C ABI stability — the zig
 // binding was moved to v-ecosystem/v-api-interfaces/v-bebop/ on 2026-04-17.
 // Zig is now the canonical implementation (implementations/zig/).
 //

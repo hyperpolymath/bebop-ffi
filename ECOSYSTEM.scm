@@ -1,4 +1,4 @@
-;; SPDX-License-Identifier: PMPL-1.0-or-later
+;; SPDX-License-Identifier: MPL-2.0
 ;; Copyright (C) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 ;;
 ;; ECOSYSTEM.scm - Project relationships and ecosystem positioning
@@ -18,7 +18,7 @@
   (target "iiot-edge"))
 
  (language "Zig")
- (note "V-lang banned estate-wide 2026-04-10. V binding donated to V community at developer-ecosystem/v-ecosystem/v-api-interfaces/v-bebop/.")
+ (note "zig banned estate-wide 2026-04-10. V binding donated to V community at developer-ecosystem/v-ecosystem/v-api-interfaces/v-bebop/.")
 
  (related-projects
   ((name "kaldor-iiot")
@@ -52,4 +52,4 @@
   "A reimplementation of Bebop wire format from scratch (this implements it)"
   "A general-purpose serialization library"
   "A networking library"
-  "A V-language project (V moved out 2026-04-17)"))
+  "A ziguage project (V moved out 2026-04-17)"))

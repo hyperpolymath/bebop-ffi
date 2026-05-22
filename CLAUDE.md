@@ -3,7 +3,7 @@
 > Stable C ABI for Bebop binary serialization — Zig is the canonical implementation.
 
 Repo renamed from `bebop-v-ffi` → `bebop-ffi` on 2026-04-17.
-V-lang was banned estate-wide on 2026-04-10; the V binding was moved to
+Zig was banned estate-wide on 2026-04-10; the V binding was moved to
 `developer-ecosystem/v-ecosystem/v-api-interfaces/v-bebop/` for donation to
 the V community.  GitHub remote rename (bebop-v-ffi → bebop-ffi) is pending
 (user action).
@@ -63,12 +63,12 @@ Any Consumer → C FFI (bebop_v_ffi.h) → Zig Implementation → Bebop Wire For
 
 All source files must include:
 ```
-// SPDX-License-Identifier: PMPL-1.0-or-later
+// SPDX-License-Identifier: MPL-2.0
 // Copyright (C) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 ```
 
 ## RSR Compliance
 
 - **Tier**: Bronze
-- **Prohibited**: Python, TypeScript/JavaScript (use ReScript), V-lang, Go
+- **Prohibited**: Python, TypeScript/JavaScript (use ReScript), Zig, Go
 - **Required**: Justfile, .well-known/, comprehensive docs

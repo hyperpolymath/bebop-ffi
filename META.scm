@@ -1,4 +1,4 @@
-;; SPDX-License-Identifier: PMPL-1.0-or-later
+;; SPDX-License-Identifier: MPL-2.0
 ;; Copyright (C) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 ;;
 ;; META.scm - Governance and design principles for bebop-ffi
@@ -13,7 +13,7 @@
    (status accepted)
    (date "2026-04-17")
    (statement "Zig replaces V as the canonical binding language")
-   (rationale "V-lang banned estate-wide 2026-04-10 in favour of Zig. Zig produces C-compatible shared/static libraries natively, matches the ABI/FFI standard (Idris2 ABI + Zig FFI).")
+   (rationale "zig banned estate-wide 2026-04-10 in favour of Zig. Zig produces C-compatible shared/static libraries natively, matches the ABI/FFI standard (Idris2 ABI + Zig FFI).")
    (consequences "V binding moved to v-ecosystem for donation; `_v_` in symbol/header names retained for ABI stability."))
 
   ((id abi-name-stability)

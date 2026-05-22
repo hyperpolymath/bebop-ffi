@@ -1,4 +1,4 @@
-;; SPDX-License-Identifier: PMPL-1.0-or-later
+;; SPDX-License-Identifier: MPL-2.0
 ;; Copyright (C) 2026 Jonathan D.A. Jewell (hyperpolymath) <j.d.a.jewell@open.ac.uk>
 ;;
 ;; STATE.scm - Current project state and progress tracking
@@ -20,7 +20,7 @@
   (name "Bebop-FFI")
   (tagline "Stable C ABI for Bebop binary serialization — Zig canonical implementation")
   (tech-stack Zig C Bebop)
-  (note "V-lang banned estate-wide 2026-04-10. V binding moved to v-ecosystem/v-api-interfaces/v-bebop/ for donation to V community."))
+  (note "zig banned estate-wide 2026-04-10. V binding moved to v-ecosystem/v-api-interfaces/v-bebop/ for donation to V community."))
 
  (current-position
   (phase "zig-canonical")
