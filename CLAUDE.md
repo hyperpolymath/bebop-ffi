@@ -1,3 +1,7 @@
+<!--
+SPDX-License-Identifier: MPL-2.0
+Copyright (c) Jonathan D.A. Jewell <j.d.a.jewell@open.ac.uk>
+-->
 # Bebop-FFI
 
 > Stable C ABI for Bebop binary serialization — Zig is the canonical implementation.
