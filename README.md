@@ -1,6 +1,6 @@
 [![Sponsor](https://img.shields.io/badge/Sponsor-%E2%9D%A4-pink?logo=github)](https://github.com/sponsors/hyperpolymath)
 
-// SPDX-License-Identifier: AGPL-3.0-or-later
+// SPDX-License-Identifier: CC-BY-SA-4.0
 // SPDX-FileCopyrightText: 2025 Hyperpolymath Contributors
 = Bebop FFI
 :toc: left
