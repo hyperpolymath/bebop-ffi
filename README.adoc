@@ -123,7 +123,7 @@ Kaldor IIoT needs to move telemetry data (temperature, humidity, loom status, sp
 
 * **Edge devices** (ESP32-C6 and other microcontrollers)
 * **Gateway nodes** (Raspberry Pi, RISC-V SBCs)
-* **Backend services** (Deno, Rust, ReScript)
+* **Backend services** (Deno, Rust, AffineScript)
 
 Bebop FFI provides the glue layer via stable C ABI, enabling:
 
@@ -266,7 +266,7 @@ bebop_ctx_free(ctx);
 
 The FFI contract enables multiple things:
 
-1. **Language agnostic** - Any language with C FFI can use it (V, Rust, Zig, Ada, ReScript, etc.)
+1. **Language agnostic** - Any language with C FFI can use it (V, Rust, Zig, Ada, AffineScript, etc.)
 2. **Implementation flexibility** - We can improve under the ABI without breaking consumers
 3. **Binary compatibility** - Applications stay linked even after library updates
 

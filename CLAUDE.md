@@ -74,5 +74,5 @@ All source files must include:
 ## RSR Compliance
 
 - **Tier**: Bronze
-- **Prohibited**: Python, TypeScript/JavaScript (use ReScript), Zig, Go
+- **Prohibited**: Python, TypeScript/JavaScript (use AffineScript), Zig, Go
 - **Required**: Justfile, .well-known/, comprehensive docs

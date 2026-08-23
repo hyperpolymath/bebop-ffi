@@ -24,8 +24,8 @@ See `META.scm` for governance principles.
 git clone https://github.com/hyperpolymath/bebop-ffi.git
 cd bebop-ffi
 
-# Using Nix (recommended for reproducibility)
-nix develop
+# Using Guix (recommended for reproducibility)
+guix develop
 
 # Or using toolbox/distrobox
 toolbox create bebop-v-ffi-dev
@@ -63,7 +63,7 @@ bebop-ffi/
 ├── MAINTAINERS.md
 ├── README.adoc
 ├── SECURITY.md
-├── flake.nix            # Nix flake (Perimeter 1)
+├── flake.guix            # Guix flake (Perimeter 1)
 └── Justfile             # Task runner (Perimeter 1)
 ```
 

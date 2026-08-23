@@ -212,7 +212,7 @@ Each waypoint builds on the previous, with clear milestones and success criteria
 |P0
 
 |[ ]
-|Nix flake (secondary)
+|Guix flake (secondary)
 |P1
 
 |[ ]
@@ -312,7 +312,7 @@ Each waypoint builds on the previous, with clear milestones and success criteria
 === Package Criteria
 
 * [ ] Guix package in official channel
-* [ ] Nix flake available
+* [ ] Guix flake available
 * [ ] AUR package available (if Linux)
 * [ ] Automated release pipeline via GitHub
 * [ ] Semantic versioning enforced
@@ -334,7 +334,7 @@ The next generation of Bebop FFI will expand from Zig-primary to multi-implement
 ----
 ┌─────────────────────────────────────────────────────────┐
 │             User Application (Any Language)             │
-│          Rust / Ada / ReScript / Deno / etc.           │
+│          Rust / Ada / AffineScript / Deno / etc.           │
 └─────────────────────────┬───────────────────────────────┘
                           │
                           ▼
@@ -399,7 +399,7 @@ The next generation of Bebop FFI will expand from Zig-primary to multi-implement
 |P1
 
 |[ ]
-|ReScript bindings (Kaldor frontend)
+|AffineScript bindings (Kaldor frontend)
 |P2
 
 |[ ]
@@ -469,7 +469,7 @@ The next generation of Bebop FFI will expand from Zig-primary to multi-implement
 
 * [ ] Rust implementation matches Zig feature-for-feature
 * [ ] Stable C ABI unchanged across implementations
-* [ ] Language bindings for Deno/TypeScript, ReScript, Ada
+* [ ] Language bindings for Deno/TypeScript, AffineScript, Ada
 * [ ] WASM support for browser/Deno (if Rust)
 * [ ] `no_std` support for bare-metal
 * [ ] RSR Silver tier compliance
