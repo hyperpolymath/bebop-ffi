@@ -1,0 +1,54 @@
+== Changelog
+
+All notable changes to `+bebop-ffi+` will be documented in this file.
+
+This file is generated from conventional commits by the
+https://github.com/hyperpolymath/standards/blob/main/.github/workflows/changelog-reusable.yml[`+changelog-reusable.yml+`]
+workflow (`+hyperpolymath/standards#206+`). Adopt the workflow in this
+repo’s CI to keep this file in sync automatically — see
+https://github.com/hyperpolymath/standards/blob/main/templates/cliff.toml[`+templates/cliff.toml+`]
+for the canonical config.
+
+The format follows https://keepachangelog.com/en/1.1.0/[Keep a
+Changelog]; this project aims to follow
+https://semver.org/spec/v2.0.0.html[Semantic Versioning].
+
+=== [Unreleased]
+
+==== Added
+
+* feat(abi): add Idris2 ABI layer per estate pattern
+* feat: scaffold MVP v0.0.1 - ABI contract, Zig stubs, V bindings
+
+==== Fixed
+
+* fix(ci): sync hypatia-scan.yml to canonical (413:
+env.HOME+Phase-2+SARIF) (#12)
+* fix(ci): adopt canonical hypatia-scan.yml (env.HOME/scanner-layout +
+Comment-step gate) (#10)
+* fix(ci): rsr-antipattern.yml duplicate heredoc (#8)
+
+==== Documentation
+
+* docs: sweep narrative prose for V→Zig migration
+* docs: update roadmap with v0.0.1 progress
+
+==== CI
+
+* build(deps): Bump the actions group with 3 updates (#14)
+* build(deps): Bump ruby/setup-ruby in the actions group (#9)
+* ci(antipattern): fix top-level dir matching + benchmarks/lsp/bench
+filename allowlists (#7)
+* ci(antipattern): TS check reads .claude/CLAUDE.md exemption table (#6)
+* ci(antipattern): broaden TS allowlist (cli/, mod.ts, lsp-server,
+_vscode_, deno-*) (#5)
+
+=== Pre-history
+
+Prior commits to this file’s introduction are recorded in git history
+but not formally classified into Keep-a-Changelog sections. To backfill,
+run `+git cliff -o CHANGELOG.md+` locally using the canonical
+https://github.com/hyperpolymath/standards/blob/main/templates/cliff.toml[`+cliff.toml+`]
+— this is one-shot mechanical work.
+
+'''''
