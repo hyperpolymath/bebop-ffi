@@ -532,7 +532,7 @@ The next generation of Bebop FFI will expand from Zig-primary to multi-implement
 
 == Contributing
 
-Contributions are welcome at all phases! See link:CONTRIBUTING.md[CONTRIBUTING.md] for:
+Contributions are welcome at all phases! See link:.github/CONTRIBUTING.md[CONTRIBUTING.md] for:
 
 * TPCF perimeter assignments
 * Coding standards
