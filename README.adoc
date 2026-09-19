@@ -332,7 +332,7 @@ bebop_ctx_free(ctx)
 * *link:ROADMAP.adoc[ROADMAP.adoc]* - Development roadmap and milestones
 * *link:CLAUDE.md[CLAUDE.md]* - AI assistant and developer guide
 * *link:SECURITY.md[SECURITY.md]* - Security policy and vulnerability reporting
-* *link:CONTRIBUTING.md[CONTRIBUTING.md]* - Contribution guidelines
+* *link:.github/CONTRIBUTING.md[CONTRIBUTING.md]* - Contribution guidelines
 * *link:docs/API.adoc[API Reference]* - Full API documentation
 
 == Standards Compliance
@@ -357,7 +357,7 @@ This project uses the *Tri-Perimeter Contribution Framework (TPCF)*:
 * *Perimeter 2*: Trusted contributors
 * *Perimeter 3*: *Community Sandbox* - Open to all
 
-All contributions are welcome! See link:CONTRIBUTING.md[CONTRIBUTING.md].
+All contributions are welcome! See link:.github/CONTRIBUTING.md[CONTRIBUTING.md].
 
 == Building from Source
 
