@@ -1,0 +1,74 @@
+{
+  "title": "bebop-ffi",
+  "output": "_site",
+  "index_page": "index.html",
+  "copy": [
+    {
+      "from": "www/public",
+      "to": ".",
+      "required": false
+    },
+    {
+      "from": "www/.well-known",
+      "to": ".well-known",
+      "required": false
+    },
+    {
+      "from": "LICENSES",
+      "to": "LICENSES",
+      "required": false
+    },
+    {
+      "from": "docs",
+      "to": "docs",
+      "required": false
+    },
+    {
+      "from": "implementations",
+      "to": "implementations",
+      "required": false
+    },
+    {
+      "from": "include",
+      "to": "include",
+      "required": false
+    },
+    {
+      "from": "schemas",
+      "to": "schemas",
+      "required": false
+    },
+    {
+      "from": "src",
+      "to": "src",
+      "required": false
+    },
+    {
+      "from": "test-vectors",
+      "to": "test-vectors",
+      "required": false
+    },
+    {
+      "from": "README.adoc",
+      "to": "README.adoc",
+      "required": false
+    }
+  ],
+  "listing": [
+    {
+      "root": "docs",
+      "label": "Documentation",
+      "match": [
+        ".adoc",
+        ".md"
+      ],
+      "link_target": "source"
+    }
+  ],
+  "nojekyll": true,
+  "notes": [
+    "Derived by scripts/estate-ruby-exit.mjs — review before merge.",
+    "index_page is hub/index.html when the repo publishes index.json: GitHub Pages",
+    "serves index.json for '/' if no index.html exists, and some consumers rely on it."
+  ]
+}
