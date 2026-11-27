@@ -17,7 +17,7 @@ tier = "infrastructure"
 have_spdx_headers = true
 have_descriptive_names = true
 no_python = true
-no_typescript = true  # use ReScript if needed
+no_typescript = true  # use AffineScript if needed
 
 # Documentation
 have_readme = true
